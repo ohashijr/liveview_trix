@@ -12,19 +12,28 @@ defmodule TrixWeb.PostLive.FormComponent do
         <:subtitle>Use this form to manage post records in your database.</:subtitle>
       </.header>
 
-      <.simple_form
-        for={@form}
-        id="post-form"
-        phx-target={@myself}
-        phx-change="validate"
-        phx-submit="save"
-      >
-        <.input field={@form[:title]} type="text" label="Title" />
-        <.input field={@form[:content]} type="text" label="Content" />
-        <:actions>
-          <.button phx-disable-with="Saving...">Save Post</.button>
-        </:actions>
-      </.simple_form>
+      <div class="flex flex-wrap">
+        <div class="w-full">
+          <.simple_form
+            for={@form}
+            id="post-form"
+            phx-target={@myself}
+            phx-change="validate"
+            phx-submit="save"
+          >
+            <.input field={@form[:title]} type="text" label="Title" />
+            <div>
+              <.input id="x" field={@form[:content]} type="hidden" phx-hook="TrixEditor" />
+              <div id="editor-ignore" phx-update="ignore" >
+                <trix-editor  class="trix-content" input="x"></trix-editor>
+              </div>
+            </div>
+            <:actions>
+              <.button phx-disable-with="Saving...">Save Post</.button>
+            </:actions>
+          </.simple_form>
+        </div>
+      </div>
     </div>
     """
   end
